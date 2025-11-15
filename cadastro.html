@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <title>Cadastro - CanedoBooks</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script>
+    function validarSenha() {
+      const senha = document.getElementById('senha').value;
+      const confirmarSenha = document.getElementById('confirmar_senha').value;
+      const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$/;
+
+      if (!regex.test(senha)) {
+        alert('A senha deve conter pelo menos 8 caracteres, incluindo um número, uma letra maiúscula, uma letra minúscula e um caractere especial.');
+        return false;
+      }
+
+      if (senha !== confirmarSenha) {
+        alert('As senhas não coincidem.');
+        return false;
+      }
+
+      const senhaHash = CryptoJS.SHA256(senha).toString();
+      document.getElementById('senha').value = senhaHash;
+      document.getElementById('confirmar_senha').value = senhaHash;
+      return true;
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="logo">CanedoBooks</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="form-container">
+      <h1>Cadastro de Usuário</h1>
+      <form action="php/confirmaCadastro.php" method="POST" onsubmit="return validarSenha()">
+        <div class="campo">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" required>
+        </div>
+
+        <div class="campo">
+          <label for="data_nascimento">Data de Nascimento</label>
+          <input type="date" id="data_cadastro" name="data_cadastro">
+        </div>
+
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="campo">
+          <label for="endereco">Endereço</label>
+          <input type="text" id="endereco" name="endereco">
+        </div>
+
+        <div class="campo">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone">
+        </div>
+
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" required>
+        </div>
+
+        <div class="campo">
+          <label for="confirmar_senha">Confirmar Senha</label>
+          <input type="password" id="confirmar_senha" name="confirmar_senha" required>
+        </div>
+
+        <button type="submit">Cadastrar</button>
+      </form>
+    </section>
+  </main>
+</body>
+
+</html>
